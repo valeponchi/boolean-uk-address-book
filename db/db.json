@@ -1,18 +1,24 @@
 {
   "contacts": [
     {
-      "id": "1",
+      "id": 1,
       "firstName": "Boris",
       "lastName": "Johnson",
       "blockContact": true,
       "addressId": 1
     },
     {
-      "id": "2",
+      "id": 2,
       "firstName": "The",
       "lastName": "Queen",
       "blockContact": false,
       "addressId": 2
+    },
+    {
+      "blockContact": false,
+      "firstName": "vale",
+      "lastName": "ponchi",
+      "id": 3
     }
   ],
   "addresses": [
@@ -27,6 +33,12 @@
       "street": "Buckingham Palace",
       "city": "London",
       "postCode": "SW1A 1AA"
+    },
+    {
+      "city": "roma",
+      "postCode": "000111",
+      "street": "via roma",
+      "id": 3
     }
   ]
 }
