@@ -224,22 +224,37 @@ function listenNewContactButton() {
 
     formEl.addEventListener(`submit`, function(e) {
       e.preventDefault()
-      // add contact to State
-      // update SERVER
-      // call f render
-      
-      let newContact = {
-        blockContact: false,
-        firstName: formEl["first-name-input"].value,
-        lastName: formEl["last-name-input"].value,
-        // addressId: ????
-      }
-
+           
+      //NEW ADDRESS
       let newAddress = {
           city: formEl["city-input"].value,
           postCode: formEl["post-code-input"].value,
           street: formEl["street-input"].value
         }
+
+      fetch("http://localhost:3000/addresses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newAddress),
+      })
+        .then((response) => response.json())
+        .then((newAddressCreated) => {
+        console.log("newAddressCreated in Server is", newAddressCreated)//HERE i HAVE ACCESS TO THE NEW CREATED ADDRESS FROM THE SERVER
+        });
+      const contactsListEl = document.querySelector(".contacts-list");
+      contactsListEl.innerHTML = "";
+      main(); 
+      
+      
+      //NEW CONTACT
+      let newContact = {
+        blockContact: false,
+        firstName: formEl["first-name-input"].value,
+        lastName: formEl["last-name-input"].value,
+        addressId: newAddressCreated.id
+      }
 
       fetch("http://localhost:3000/contacts", {
         method: "POST",
@@ -249,25 +264,20 @@ function listenNewContactButton() {
         body: JSON.stringify(newContact),
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log("Now contacts-data in Server are", data);
+        .then((newCreatedContact) => {
+          console.log("newCreatedContact in Server is", newCreatedContact);
         });
-    
-      fetch("http://localhost:3000/addresses", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newAddress),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-        console.log("Now addresses-data in Server are", data);
-        });
-      const contactsListEl = document.querySelector(".contacts-list");
-      contactsListEl.innerHTML = "";
-      main();      
+
+      //NOW I CAN USE THE NEWADDRESS AND NEW CONTACT
+      //TO RENDER THE PAGE
+
+
       }//f of 2nd argument
+
+      
+      
+    
+      
     ) //submit arguments
 
     //APPENDING:
